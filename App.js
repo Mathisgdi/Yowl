@@ -1,23 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import tw from 'twrnc';
+import { Text, View } from 'react-native';
 
 export default function App() {
   return (
-    <View style={tw`flex-1 justify-center items-center bg-red`}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <Text>Martin </Text>
-
+    <View classname = "flex-1 justify-center items-center bg-red">
+    <Text>Open up App.js to start working on your app!</Text>
+    <Text>Martin </Text>
+    <Text style={`tw text-white text-3xl font-bold|f-Hello World`}> </Text>
       <StatusBar style="auto" />
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
