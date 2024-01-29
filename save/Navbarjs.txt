@@ -1,0 +1,77 @@
+// import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+// import Ionicons from 'react-native-vector-icons/Ionicons'
+// import { useNavigation } from '@react-navigation/native'; 
+// import {TouchableOpacity } from 'react-native';
+// // import Home from '../app/screens/Home';
+// // import Search from '../app/screens/Search';
+// // import Create from '../app/screens/Create';
+// // import Profile from '../app/screens/Profile';
+// // import Community from '../app/screens/Community';
+
+
+// const tab = createBottomTabNavigator();
+
+// export default function Navbar() {
+//     const navigation = useNavigation();
+//     return (
+//         <tab.Navigator className="flex-1 items-end"
+//           screenOptions={({route}) => ({
+//             tabBarIcon: ({focused,color,size}) =>{
+//               let iconName;
+//               if (route.name == "Home"){
+//                 iconName = focused // if focused, return home sinon return home-outline
+//                   ? 'home'
+//                   : 'home-outline';
+//               }else if (route.name == "Search"){
+//                 iconName = focused
+//                 ? "search"
+//                 : "search-outline"
+//               }
+//               else if (route.name == "Create"){
+//                 iconName = focused
+//                 ? "add-circle"
+//                 : "add-circle-outline"
+//               }
+//               else if (route.name == "Community"){
+//                 iconName = focused
+//                 ? "people"
+//                 :"people-outline"
+//               }
+//               else if (route.name == "Profile"){
+//                 iconName = focused
+//                 ? "person"
+//                 :"person-outline"
+//               }
+//               return <Ionicons name = {iconName} size= {30}  />
+//             },
+//           })}
+//         >
+//           <tab.Screen name="Home" options={{ tabBarBadge: 3, tabBarShowLabel : false, tabBarButton: (props) => (
+//       <TouchableOpacity {...props} onPress={() => navigation.navigate('Home')} />
+//     ), }} />
+//           <tab.Screen name="Search" options = {{tabBarShowLabel : false,
+//         tabBarButton: (props) => (
+//           <TouchableOpacity {...props} onPress={() => navigation.navigate('Search')} />
+//         ),
+//         }}/>
+//           <tab.Screen name="Create" options = {{tabBarShowLabel : false,
+//         tabBarButton: (props) => (
+//           <TouchableOpacity {...props} onPress={() => navigation.navigate('Create')} />
+//         ),
+//         }} />
+//           <tab.Screen name ="Community"  options = {{tabBarShowLabel : false,
+//         tabBarButton: (props) => (
+//           <TouchableOpacity {...props} onPress={() => navigation.navigate('Community')} />
+//         ),
+//         }} />
+//           <tab.Screen name="Profile" options = {{tabBarShowLabel : false,
+//         tabBarButton: (props) => (
+//           <TouchableOpacity {...props} onPress={() => navigation.navigate('Profile')} />
+//         ),  
+//         }} />
+          
+//         </tab.Navigator>
+//     );
+//   }
+  
+  

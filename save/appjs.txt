@@ -1,0 +1,158 @@
+// import { StatusBar } from 'expo-status-bar';
+// import { NavigationContainer } from '@react-navigation/native';
+// import { createNativeStackNavigator } from '@react-navigation/native-stack';
+// import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+// import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity } from 'react-native';
+// import Ionicons from
+// 'react-native-vector-icons/Ionicons'
+
+// // Import pages
+// import Login from './app/screens/Login';
+// import Home from './app/screens/Home';
+// import Search from './app/screens/Search';
+// import Create from './app/screens/Create';
+// import Profile from './app/screens/Profile';
+// import Community from './app/screens/Community';
+
+// const Stack = createNativeStackNavigator();
+// const tab = createBottomTabNavigator();
+
+// export default function App() {
+//   return (
+//     <NavigationContainer >
+//       {/* <Stack.Screen name="Login" component={Login} />
+//       <tab.Navigator
+//         screenOptions={({route}) => ({
+//           tabBarIcon: ({focused,color,size}) =>{
+//             let iconName;
+
+//             if (route.name == "Home"){
+//               iconName = focused // if focused, return home sinon return home-outline
+//                 ? 'home'
+//                 : 'home-outline';
+//             }else if (route.name == "Search"){
+//               iconName = focused
+//               ? "search"
+//               : "search-outline"
+//             }
+//             else if (route.name == "Create"){
+//               iconName = focused
+//               ? "add-circle"
+//               : "add-circle-outline"
+//             }
+//             else if (route.name == "Community"){
+//               iconName = focused
+//               ? "people"
+//               :"people-outline"
+//             }
+//             else if (route.name == "Profile"){
+//               iconName = focused
+//               ? "person"
+//               :"person-outline"
+//             }
+//             return <Ionicons name = {iconName} size= {30}  />
+//           },
+//           tabBarActiveTintColor: 'black',
+//           tabBarInactiveTintColor: 'gray',
+//         })}
+//       >
+//         <tab.Screen name="Home" component={Home} options={{ tabBarBadge: 3, tabBarShowLabel : false }} />
+//         <tab.Screen name="Search" component={Search} options = {{tabBarShowLabel : false}}/>
+//         <tab.Screen name="Create" component={Create} options = {{tabBarShowLabel : false}} />
+//         <tab.Screen name ="Community" component={Community} options = {{tabBarShowLabel : false}} />
+//         <tab.Screen name="Profile" component={Profile} options = {{tabBarShowLabel : false}} />
+        
+//       </tab.Navigator> */}
+//     </NavigationContainer>
+//   );
+// }
+
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import React, { useContext } from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Ionicons from
+'react-native-vector-icons/Ionicons'
+
+// Importez vos composants d'écran ici
+import Home from './app/screens/Home';
+import Search from './app/screens/Search';
+import Create from './app/screens/Create';
+import Community from './app/screens/Community';
+import Profile from './app/screens/Profile';
+import Login from './app/screens/Login';
+
+const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+// Screens names
+
+function HomeTab (){
+  return(
+    <Tab.Navigator
+      screenOptions={({route}) => ({
+          tabBarIcon: ({focused,color,size}) =>{
+            let iconName;
+
+            if (route.name == "Home"){
+              iconName = focused // if focused, return home sinon return home-outline
+                ? 'home'
+                : 'home-outline';
+            }else if (route.name == "Search"){
+              iconName = focused
+              ? "search"
+              : "search-outline"
+            }
+            else if (route.name == "Create"){
+              iconName = focused
+              ? "add-circle"
+              : "add-circle-outline"
+            }
+            else if (route.name == "Community"){
+              iconName = focused
+              ? "people"
+              :"people-outline"
+            }
+            else if (route.name == "Profile"){
+              iconName = focused
+              ? "person"
+              :"person-outline"
+            }
+            return <Ionicons name = {iconName} size= {30}  />
+          },
+          tabBarActiveTintColor: 'black',
+          tabBarInactiveTintColor: 'gray',
+        })}
+      >
+      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Search" component={Search} />
+      <Tab.Screen name="Create" component={Create} />
+      <Tab.Screen name="Community" component={Community} />
+      <Tab.Screen name="Profile" component={Profile} />
+    </Tab.Navigator>
+  )
+}
+
+function App() {
+  return (
+    // <NavigationContainer>
+    //   <Stack.Navigator initialRouteName="Home">
+    //     <Stack.Screen name="Home" component={Home} />
+    //     <Stack.Screen name="Search" component={Search} />
+    //     <Stack.Screen name="Create" component={Create} />
+    //     <Stack.Screen name="Community" component={Community} />
+    //     <Stack.Screen name="Profile" component={Profile} />
+    //     <Stack.Screen name="Login" component={Login} />
+    //   </Stack.Navigator>
+    // </NavigationContainer>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeTab} />
+        <Stack.Screen name="Login" component={Login} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+export default App; HomeTab;
+
+
