@@ -12,6 +12,7 @@ import Create from './app/screens/Create';
 import Community from './app/screens/Community';
 import Profile from './app/screens/Profile';
 import Login from './app/screens/Login';
+import Profile from './app/screens/Profile';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -67,6 +68,7 @@ function HomeTab (){
 function App() {
   return (
     <NavigationContainer>
+        <Stack.Screen name="Login" component={Login} 
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeTab} options={{ title: 'Join' }} />
         {/* la navbar n'est pas affiché sur la page login */}
