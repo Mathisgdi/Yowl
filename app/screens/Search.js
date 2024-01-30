@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 
 function Search (){
     return (
-        <View  >  
+        <View  >
           <Text>
             page search de fou furieux
           </Text>
