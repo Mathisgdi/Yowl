@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { FIREBASE_AUTH } from '../../FirebaseConfig';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 
-const Login = ({ navigation }) => {
+const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
@@ -16,6 +16,19 @@ const Login = ({ navigation }) => {
             console.log(response);
             alert('Connedc');
         } catch (e) {
+            console.log(e);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    const SignUp = async () => {
+        setLoading(true);
+        try {
+            const response = await createUserWithEmailAndPassword(auth, email, password);
+            alert('User created');
+        }
+        catch (e) {
             console.log(e);
         } finally {
             setLoading(false);
@@ -34,7 +47,7 @@ const Login = ({ navigation }) => {
             ) : (
                 <>
                     <Text style={styles.login} onPress={SignIn}>LOGIN</Text>
-                    <Button title="Register here" onPress={() => navigation.navigate('Register')}></Button>
+                    <Button title="Register here" onPress={SignUp}></Button>
                 </>
             )}
     </View>
