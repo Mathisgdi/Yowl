@@ -19,59 +19,45 @@ const Tab = createBottomTabNavigator();
 function HomeTab() {
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
-
-          if (route.name == "Home") {
-            iconName = focused // if focused, return home sinon return home-outline
-              ? "home"
-              : "home-outline";
-          } else if (route.name == "Search") {
-            iconName = focused ? "search" : "search-outline";
-          } else if (route.name == "Create") {
-            iconName = focused ? "add-circle" : "add-circle-outline";
-          } else if (route.name == "Community") {
-            iconName = focused ? "people" : "people-outline";
-          } else if (route.name == "Profile") {
-            iconName = focused ? "person" : "person-outline";
-          }
-          return <Ionicons name={iconName} size={30} />;
-        },
-        tabBarActiveTintColor: "black",
-        tabBarInactiveTintColor: "gray",
-      })}
-    >
-      {/* énumère chaque écran avec ses composant importé en haut de la page */}
-      <Tab.Screen
-        name="Home"
-        component={Home}
-        options={{ tabBarShowLabel: false, headerShown: false }}
-      />
-      <Tab.Screen
-        name="Search"
-        component={Search}
-        options={{ tabBarShowLabel: false, headerShown: false }}
-      />
-      <Tab.Screen
-        name="Create"
-        component={Create}
-        options={{ tabBarShowLabel: false, headerShown: false }}
-      />
-      <Tab.Screen
-        name="Community"
-        component={Community}
-        options={{ tabBarShowLabel: false, headerShown: false }}
-      />
-      <Tab.Screen
-        name="Profile"
-        component={Profile}
-        options={{
-          tabBarShowLabel: false,
-          headerBackTitleVisible: true,
-          headerShown: false,
-        }}
-      />
+      screenOptions={({route}) => ({
+          tabBarIcon: ({focused,color,size}) =>{
+            let iconName;
+            if (route.name == "Home"){
+              iconName = focused // if focused, return home sinon return home-outline
+                ? 'home'
+                : 'home-outline';
+            }else if (route.name == "Search"){
+              iconName = focused
+              ? "search"
+              : "search-outline"
+            }
+            else if (route.name == "Create"){
+              iconName = focused
+              ? "add-circle"
+              : "add-circle-outline"
+            }
+            else if (route.name == "Community"){
+              iconName = focused
+              ? "people"
+              :"people-outline"
+            }
+            else if (route.name == "Profile"){
+              iconName = focused
+              ? "person"
+              :"person-outline"
+            }
+            return <Ionicons name = {iconName} size= {30}  />
+          },
+          tabBarActiveTintColor: 'black',
+          tabBarInactiveTintColor: 'gray',
+        })}
+      >
+        {/* énumère chaque écran avec ses composant importé en haut de la page */}
+      <Tab.Screen name="Home" component={Home} options = {{tabBarShowLabel : false,  headerShown: false}}  /> 
+      <Tab.Screen name="Search" component={Search} options = {{tabBarShowLabel : false,  headerShown: false}} />
+      <Tab.Screen name="Create" component={Create} options = {{tabBarShowLabel : false,  headerShown: false}} />
+      <Tab.Screen name="Community" component={Community} options = {{tabBarShowLabel : false,  headerShown: false}} />
+      <Tab.Screen name="Profile" component={Profile} options = {{tabBarShowLabel : false, headerBackTitleVisible : true, headerShown: false }} />
     </Tab.Navigator>
   );
 }
