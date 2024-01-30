@@ -12,9 +12,6 @@ import Create from './app/screens/Create';
 import Community from './app/screens/Community';
 import Profile from './app/screens/Profile';
 import Login from './app/screens/Login';
-// import Register from './app/screens/Register';
-import Chat from './app/screens/Chat';
-import Home from './app/screens/Home';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -68,14 +65,6 @@ function HomeTab (){
 }
 
 function App() {
-  return (
-    <Stack.Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
-      <Stack.Screen name="Login" component={Login} />
-    </Stack.Navigator>
-  );
-}
-
-function RootNavigator() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
