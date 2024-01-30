@@ -4,11 +4,14 @@ import {
     View,
     Text,
     Image,
-    Button,
 } from 'react-native';
-import {Card, ListItem, Icon} from 'react-native-elements';
+import {Card, ListItem} from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
-import Login from './Login';
+import Settings from './Settings';
+import { Button } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/Ionicons';
+// import Ionicons from
+// 'react-native-vector-icons/Ionicons'
 
 
 
@@ -18,22 +21,18 @@ const Profile = () => {
 
     const navigation = useNavigation();
 
-
-//     const onSignOut = () => {
-//         auth()
-//             .signOut()
-//             .then(() => {
-//                 console.log('User signed out!');
-//                 props.navigation.navigate('Login');
-//             });
-//     };
-
-
     return (
         <View>
             <Card>
                 <Card.Divider/>
                 <View>
+                    <Button 
+                        icon={
+                            <Icon name="settings-outline" size={30} />
+                        }
+                        buttonStyle={{ backgroundColor: 'transparent', padding: 10, alignSelf: 'flex-end' }}
+                        onPress={() => navigation.navigate('Settings')}
+                    />
                     <View style={styles.headerContainer}>
                         <Image
                             style={styles.image}
@@ -43,7 +42,6 @@ const Profile = () => {
                             <Text style={styles.followersText}> Following: 500 </Text>
                     </View>
                     <Card.Title> User.name </Card.Title>
-                    <Button title='Se Déconnecter' onPress={() => navigation.navigate('Login')} />
                 </View>
             </Card>
         </View>

@@ -13,6 +13,8 @@ import Community from './app/screens/Community';
 import Profile from './app/screens/Profile';
 import Login from './app/screens/Login';
 import Register from './app/screens/Register';
+import Settings from './app/screens/Settings';
+import Privacy from './app/screens/Privacy';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -77,6 +79,8 @@ function App() {
         {/* la navbar n'est pas affiché sur la page login */}
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Register" component={Register} />
+        <Stack.Screen name="Settings" component={Settings} /> 
+        <Stack.Screen name="Privacy" component={Privacy} /> 
       </Stack.Navigator>
     </NavigationContainer>
   );
