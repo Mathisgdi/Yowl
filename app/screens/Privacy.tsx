@@ -3,11 +3,8 @@ import {
     StyleSheet,
     View,
     Text,
-    Image,
     ScrollView,
 } from 'react-native';
-import {Card, ListItem} from 'react-native-elements';
-
 
 
 const Privacy = () => {
@@ -15,11 +12,9 @@ const Privacy = () => {
 
     return (
         <ScrollView style={styles.scrollView}>
-                <Card.Title> Privacy Policy </Card.Title>
                 <View>                                                         
                     <View style={styles.headerContainer}>
                         <Text style={styles.followersText}> 
-                            [JOIN]
                             ARTICLE 1: PREAMBLE
                             </Text>
                             <Text style={styles.followersText}> 
@@ -29,8 +24,7 @@ const Privacy = () => {
                             Who is responsible for processing the personal data collected and processed;
                             the recipients of this personal data;
                             the application's cookie policy.
-                            This policy supplements the legal notice and the General Conditions of Use, which can be consulted by users at the following address:
-                            [exampleURL]
+                            This policy supplements the legal notice and the General Conditions of Use, which can be consulted by users at the following address.
                         </Text>
                         <Text style={styles.followersText}> 
                             ARTICLE 2: PRINCIPLES GOVERNING THE COLLECTION AND PROCESSING OF PERSONAL DATA
@@ -125,6 +119,7 @@ const Privacy = () => {
                     </View>
 
                 </View>
+  
         </ScrollView>
 
     );
