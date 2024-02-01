@@ -1,21 +1,26 @@
-import { View, Text, StyleSheet, TextInput, ActivityIndicator, Button, Image } from 'react-native';
+import { View, Text, StyleSheet, TextInput, ActivityIndicator, Button, Image, Keyboard } from 'react-native';
 import React, { useState } from 'react';
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../FirebaseConfig';
+import { collection, doc, setDoc } from 'firebase/firestore';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { CheckBox } from 'react-native-elements';
-// import { setDoc, doc } from 'firebase/firestore';
-
-
+import { ScrollView } from 'react-native-gesture-handler';
 
 const Register = ({navigation}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordCheck, setPasswordCheck] = useState('');
-    const [username, setUsername] = useState('');
     const [loading, setLoading] = useState(false);
     const auth = FIREBASE_AUTH;
-    const [accept, setAccept] = useState(false)
-    // const db = FIREBASE_DB;
+    const db = FIREBASE_DB;
+    const [accept, setAccept] = useState(false);
+    const [addData, setAddData] = useState('');
+
+    const addField = async (text: string) => {
+        await setDoc(doc(db, "username", text), {
+            field: text
+        });
+    }
 
     const SignUp = async () => {
         setLoading(true);
@@ -30,6 +35,7 @@ const Register = ({navigation}) => {
             }
             if (password === passwordCheck && good == true) {
                 const response = await createUserWithEmailAndPassword(auth, email, password);
+                addField(addData)
                 alert('User created');
             }
             if (password != passwordCheck && good == true) {
@@ -44,11 +50,11 @@ const Register = ({navigation}) => {
         }
     }
     return (
-        <View style={styles.container} >
+        <ScrollView style={styles.container} >
 
             <Image style={styles.logo} source={require('../../assets/logo.png')} />
-            {/* <Text style={styles.title}>Username</Text>
-            <TextInput style={styles.input} placeholder=' Username' onChangeText={(text) => setUsername(text)}></TextInput> */}
+            <Text style={styles.title}>Username</Text>
+            <TextInput style={styles.input} placeholder=' Username'  onChangeText={(addData) => setAddData(addData)}></TextInput>
             <Text style={styles.title}>Email</Text>
             <TextInput style={styles.input} placeholder=' example@mail.com' onChangeText={(email) => setEmail(email)}></TextInput>
             <Text style={styles.title}>Password</Text>
@@ -67,7 +73,7 @@ const Register = ({navigation}) => {
                     <Button title="REGISTER" onPress={SignUp}></Button>
                 </>
             )}
-    </View>
+    </ScrollView>
   );
 };
 
@@ -79,7 +85,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     },
     checkbox: {
-        flexDirection: 'row', // Aligne les éléments horizontalement
+        flexDirection: 'row',
         alignItems: 'center',
     },
     text: {
