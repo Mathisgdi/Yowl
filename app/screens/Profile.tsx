@@ -5,13 +5,12 @@ import {
     Text,
     Image,
 } from 'react-native';
-import {Card, ListItem} from 'react-native-elements';
+import {Card} from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import Settings from './Settings';
 import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Ionicons';
-// import Ionicons from
-// 'react-native-vector-icons/Ionicons'
+
 
 
 

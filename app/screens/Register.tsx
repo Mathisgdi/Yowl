@@ -64,7 +64,7 @@ const Register = ({navigation}) => {
             <TextInput secureTextEntry={true} style={styles.input} placeholder=' Verify your password' onChangeText={(passwordCheck) => setPasswordCheck(passwordCheck)}></TextInput>
             <View style={styles.checkbox}>
             <CheckBox checked={accept} onPress={() => setAccept(!accept)} />
-            <Button title="Accept the CGU" onPress={() => navigation.navigate('CGU')}></Button>
+            <Button title="Accept the CGU" onPress={() => navigation.navigate('Privacy')}></Button>
             </View>
             {loading ? (
                 <ActivityIndicator size="large" color="#0000ff"/>
