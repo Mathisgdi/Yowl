@@ -5,30 +5,24 @@ import {
     Text,
     TextInput,
 } from 'react-native';
-import {Card} from 'react-native-elements';
-import { useNavigation } from '@react-navigation/native';
 import Login from './Login';
 import Privacy from './Privacy';
 import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icons from 'react-native-vector-icons/Feather';
-import { FIREBASE_AUTH, FIREBASE_DB } from '../../FirebaseConfig';
 import auth from "@react-native-firebase/auth";
 
 
-const Settings = () => {
+const Settings = ({navigation}) => {
 
-    const navigation = useNavigation();
-
-
-    const onSignOut = () => {
-        auth()
-            .signOut()
-            .then(() => {
-                console.log('User signed out!');
-                navigation.navigate('Login');
-            });
-    };
+    // const onSignOut = () => {
+    //     auth()
+    //         .signOut()
+    //         .then(() => {
+    //             console.log('User signed out!');
+    //             navigation.navigate('Login');
+    //         });
+    // };
 
 
     const [displayText, setDisplayText] = useState('');
@@ -53,8 +47,7 @@ const Settings = () => {
 
     return (
         <View>
-            <Card>
-                <Card.Divider/>
+            <View>
                 <View>
                     <Button 
                         icon={
@@ -99,10 +92,10 @@ const Settings = () => {
                         titleStyle={{ color: 'black', marginLeft: 20 }}
                     />                                                           
                     {/* <Button title='Se Déconnecter' onPress={() => navigation.navigate('Login')} /> */}
-                    <Button title='Sign Out' onPress={() => onSignOut ()}                         
-                    buttonStyle={{ backgroundColor: 'red', padding: 10}} />
+                    {/* <Button title='Sign Out' onPress={() => onSignOut ()}                         
+                    buttonStyle={{ backgroundColor: 'red', padding: 10}} /> */}
                 </View>
-            </Card>
+            </View>
         </View>
     );
 };

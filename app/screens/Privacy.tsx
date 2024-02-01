@@ -12,12 +12,12 @@ const Privacy = () => {
 
     return (
         <ScrollView style={styles.scrollView}>
-                <View>                                                         
+                <View>
                     <View style={styles.headerContainer}>
-                        <Text style={styles.followersText}> 
+                        <Text style={styles.followersText}>
                             ARTICLE 1: PREAMBLE
                             </Text>
-                            <Text style={styles.followersText}> 
+                            <Text style={styles.followersText}>
                             The purpose of this privacy policy is to inform users of the application:
                             On how their personal data is collected. Personal data is any information that can be used to identify a user. This may include, but is not limited to: first and last names, age, e-mail address;
                             On the rights they have concerning this data;
@@ -26,10 +26,10 @@ const Privacy = () => {
                             the application's cookie policy.
                             This policy supplements the legal notice and the General Conditions of Use, which can be consulted by users at the following address.
                         </Text>
-                        <Text style={styles.followersText}> 
+                        <Text style={styles.followersText}>
                             ARTICLE 2: PRINCIPLES GOVERNING THE COLLECTION AND PROCESSING OF PERSONAL DATA
                         </Text>
-                        <Text style={styles.followersText}> 
+                        <Text style={styles.followersText}>
                             In accordance with Article 5 of European Regulation 2016/679, personal data is:
                             Processed lawfully, fairly and transparently with regard to the data subject;
                             Collected for specified (see Article 3.1 hereof), explicit and legitimate purposes, and may not be further processed in a manner incompatible with those purposes;

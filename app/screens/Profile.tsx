@@ -5,9 +5,6 @@ import {
     Text,
     Image,
 } from 'react-native';
-import {Card} from 'react-native-elements';
-import { useNavigation } from '@react-navigation/native';
-import Settings from './Settings';
 import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -16,16 +13,14 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 
 
-const Profile = () => {
+const Profile = ({navigation}) => {
 
-    const navigation = useNavigation();
 
     return (
         <View>
-            <Card>
-                <Card.Divider/>
+            <View>
                 <View>
-                    <Button 
+                    <Button
                         icon={
                             <Icon name="settings-outline" size={30} />
                         }
@@ -40,9 +35,8 @@ const Profile = () => {
                             <Text style={styles.followersText}> Followers: 1000 </Text>
                             <Text style={styles.followersText}> Following: 500 </Text>
                     </View>
-                    <Card.Title> User.name </Card.Title>
                 </View>
-            </Card>
+            </View>
         </View>
     );
 };

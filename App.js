@@ -62,7 +62,7 @@ function HomeTab (){
       <Tab.Screen name="Search" component={Search} options = {{tabBarShowLabel : false,  headerShown: false}} />
       <Tab.Screen name="Create" component={Create} options = {{tabBarShowLabel : false,  headerShown: false}} />
       <Tab.Screen name="Community" component={Community} options = {{tabBarShowLabel : false,  headerShown: false}} />
-      <Tab.Screen name="Profile" component={Profile} options = {{tabBarShowLabel : false, headerBackTitleVisible : true, headerShown: false }} />
+      { <Tab.Screen name="Profile" component={Profile} options = {{tabBarShowLabel : false, headerBackTitleVisible : true, headerShown: false }} /> }
     </Tab.Navigator>
   )
 }
@@ -79,7 +79,7 @@ function App() {
         {/* la navbar n'est pas affiché sur la page login */}
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Register" component={Register} />
-        <Stack.Screen name="Settings" component={Settings} /> 
+        <Stack.Screen name="Settings" component={Settings} />
         <Stack.Screen name="Privacy" component={Privacy} /> 
       </Stack.Navigator>
     </NavigationContainer>
