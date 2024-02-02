@@ -13,8 +13,9 @@ const Login = ({ navigation }) => {
         setLoading(true);
         try {
             const response = await signInWithEmailAndPassword(auth, email, password);
+            navigation.navigate('Home');
             console.log(response);
-            alert('Connedc');
+            alert('Connected');
         } catch (e) {
             console.log(e);
         } finally {

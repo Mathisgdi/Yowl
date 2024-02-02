@@ -35,6 +35,11 @@ const Profile = ({navigation}) => {
                             <Text style={styles.followersText}> Followers: 1000 </Text>
                             <Text style={styles.followersText}> Following: 500 </Text>
                     </View>
+                    <Button
+                        buttonStyle={{ margin: 30, borderRadius:20, backgroundColor: 'red' }}
+                        title="Log out"
+                        onPress={() => navigation.navigate('Login')}
+                    />
                 </View>
             </View>
         </View>
