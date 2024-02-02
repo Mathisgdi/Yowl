@@ -1,5 +1,5 @@
-import React, { useState, useContext } from "react";
-import { View, Text, StyleSheet, Alert, Button, TextInput } from "react-native";
+import React, { useState, useContex, useEffect } from "react";
+import { View, Text,Image,Platform, StyleSheet, Alert, Button, TextInput } from "react-native";
 import { FIREBASE_DB } from "../../FirebaseConfig";
 import {
   addDoc,
@@ -9,11 +9,35 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { FIREBASE_AUTH } from "../../FirebaseConfig";
+import ActionButton from 'react-native-action-button';
+import Icon from 'react-native-vector-icons/Ionicons';
+import * as ImagePicker from 'expo-image-picker';
+import { getUsername } from './Profile';
+
+// import storage from '@react-native-firebase/storage';
+
 
 const auth = FIREBASE_AUTH;
 const AddPostScreen = () => {
   const [post, setPost] = useState(null);
+  const [image, setImage] = useState(null);
   const db = FIREBASE_DB;
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
+
   const addPost = async (data) => {
     if (!post || post.trim() === "") {
       Alert.alert("Error", "You need to write something to post!");
@@ -24,7 +48,7 @@ const AddPostScreen = () => {
       post: post,
       likes: "",
       imageUri :'',
-      username : "user1",
+      username : getUsername(),
       timestamp: serverTimestamp(),
     })
       .then(() => {
@@ -54,6 +78,15 @@ const AddPostScreen = () => {
         ></TextInput>
         <Button title="Add Post" onPress={addPost} />
       </View>
+      {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+      <ActionButton buttonColor="#57A7FF">
+          <ActionButton.Item buttonColor='#57A7FF' title="Take photo" onPress={() => console.log("notes tapped!")}>
+            <Icon name="camera" style={styles.actionButtonIcon} />
+          </ActionButton.Item>
+          <ActionButton.Item buttonColor='#57A7FF' title="Choose photo" onPress={pickImage}>
+            <Icon name="images-outline" style={styles.actionButtonIcon} />
+          </ActionButton.Item>
+        </ActionButton>
     </View>
   );
 };
@@ -69,7 +102,7 @@ const styles = StyleSheet.create({
   actionButtonIcon: {
     fontSize: 20,
     height: 22,
-    color: "white",
+    color: 'white',
   },
 
   InputWrapper: {
