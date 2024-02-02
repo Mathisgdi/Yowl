@@ -13,6 +13,10 @@ const AddPostScreen = () => {
   const [post, setPost] = useState(null);
   const db = FIREBASE_DB;
   const addPost = async (data) => {
+    if (!post || post.trim() === "") {
+      Alert.alert("Error", "You need to write something to post!");
+      return;
+    }
     await addDoc(collection(db, "posts"), {
       userID: "1",
       post: post,
