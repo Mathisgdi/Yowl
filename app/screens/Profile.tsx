@@ -17,14 +17,6 @@ import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 const Profile = ({navigation}) => {
     const auth = FIREBASE_AUTH;
     const db = FIREBASE_DB;
-    const getUsername = () => {
-        let user = auth.currentUser;
-        if (user) {
-            return user.displayName;
-        } else {
-            return "No user signed in";
-        }
-    }
 
     return (
       <View>
@@ -54,7 +46,15 @@ const Profile = ({navigation}) => {
     );
 };
 
-
+export const getUsername = () => {
+    const auth = FIREBASE_AUTH;
+    let user = auth.currentUser;
+    if (user) {
+      return user.displayName;
+    } else {
+      return "No user signed in";
+    }
+  };
 
 
 const styles = StyleSheet.create({

@@ -9,6 +9,7 @@ import React, { useState, useEffect } from "react";
 import { FIREBASE_DB } from "../../FirebaseConfig";
 import { collection, setDoc, getDocs, onSnapshot, query } from "firebase/firestore";
 
+
 const ShowData = () => {
   const db = FIREBASE_DB;
   const [postData, setPostData] = useState([]);
