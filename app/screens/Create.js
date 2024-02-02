@@ -8,7 +8,9 @@ import {
   serverTimestamp,
   setDoc,
 } from "firebase/firestore";
+import { FIREBASE_AUTH } from "../../FirebaseConfig";
 
+const auth = FIREBASE_AUTH;
 const AddPostScreen = () => {
   const [post, setPost] = useState(null);
   const db = FIREBASE_DB;
@@ -18,7 +20,7 @@ const AddPostScreen = () => {
       return;
     }
     await addDoc(collection(db, "posts"), {
-      userID: "1",
+      userID: auth.currentUser.uid,
       post: post,
       likes: "",
       timestamp: serverTimestamp(),

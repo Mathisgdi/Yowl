@@ -18,7 +18,8 @@ const Register = ({navigation}) => {
 
     const addField = async (text: string) => {
         await setDoc(doc(db, "username", text), {
-            field: text
+            field: text,
+            UID: auth.currentUser.uid
         });
     }
 
@@ -37,6 +38,7 @@ const Register = ({navigation}) => {
                 const response = await createUserWithEmailAndPassword(auth, email, password);
                 addField(addData)
                 alert('User created');
+                navigation.navigate('Home');
             }
             if (password != passwordCheck && good == true) {
                 alert('Passwords do not match');
