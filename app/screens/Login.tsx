@@ -15,7 +15,6 @@ const Login = ({ navigation }) => {
             const response = await signInWithEmailAndPassword(auth, email, password);
             navigation.navigate('Home');
             console.log(response);
-            alert('Connected');
         } catch (e) {
             console.log(e);
         } finally {

@@ -11,7 +11,7 @@ import {
 import React, { useState } from "react";
 import { FIREBASE_AUTH, FIREBASE_DB } from "../../FirebaseConfig";
 import { collection, doc, setDoc } from "firebase/firestore";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { CheckBox } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 
@@ -26,9 +26,12 @@ const Register = ({ navigation }) => {
   const [addData, setAddData] = useState("");
 
   const addField = async (text: string) => {
-    await setDoc(doc(db, "username", text), {
-      field: text,
-      UID: auth.currentUser.uid,
+    // await setDoc(doc(db, "username", text), {
+    //   field: text,
+    //   UID: auth.currentUser.uid,
+    // });
+    updateProfile(auth.currentUser, {
+      displayName: addData,
     });
   };
 
@@ -53,7 +56,6 @@ const Register = ({ navigation }) => {
           password
         );
         addField(addData);
-        alert("User created");
         navigation.navigate("Home");
       }
       if (password != passwordCheck && good == true) {
@@ -68,7 +70,7 @@ const Register = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Image style={styles.logo} source={require("../../assets/logo.png")} />
 
       <Text style={styles.title}>Username</Text>
@@ -119,7 +121,7 @@ const Register = ({ navigation }) => {
           <Button title="REGISTER" onPress={SignUp}></Button>
         </>
       )}
-    </View>
+    </ScrollView>
   );
 };
 
