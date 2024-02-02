@@ -23,6 +23,8 @@ const AddPostScreen = () => {
       userID: auth.currentUser.uid,
       post: post,
       likes: "",
+      imageUri :'',
+      username : "user1",
       timestamp: serverTimestamp(),
     })
       .then(() => {
