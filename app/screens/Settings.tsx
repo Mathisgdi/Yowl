@@ -49,50 +49,50 @@ const Settings = ({navigation}) => {
         <View>
             <View>
                 <View>
-                    <Button 
+                    <Button
                         icon={
                             <Icon name="lock-closed-outline" size={30} />
                         }
                         title="Privacy Policy"
                         buttonStyle={{ backgroundColor: 'transparent', padding: 20, alignSelf: 'flex-start'}}
                         titleStyle={{ color: 'black', marginLeft: 20 }}
-                        onPress={() => navigation.navigate('Privacy')}                        
+                        onPress={() => navigation.navigate('Privacy')}
                     />
 
 
-                    <Button 
+                    <Button
                         icon={
                             <Icon name="list-outline" size={30} />
                         }
                         title="My data"
                         buttonStyle={{ backgroundColor: 'transparent', padding: 20,  alignSelf: 'flex-start'}}
                         titleStyle={{ color: 'black', marginLeft: 20 }}
-                        onPress={() => handleDataCollectedPress ()} 
+                        onPress={() => handleDataCollectedPress ()}
                     />
-                    <Text>{displayText}</Text>
+                    <Text style={styles.text}>{displayText}</Text>
                     {showTextInput && (
                     <TextInput style={styles.input} placeholder="exemple@mail.com" />
                     )}
 
 
-                    <Button 
+                    <Button
                         icon={
                             <Icons name="bell" size={30} />
                         }
                         title="Notifications"
                         buttonStyle={{ backgroundColor: 'transparent', padding: 20,  alignSelf: 'flex-start', marginTop: -20}}
                         titleStyle={{ color: 'black', marginLeft: 20 }}
-                    /> 
-                    <Button 
+                    />
+                    <Button
                         icon={
                             <Icon name="options-outline" size={30} />
                         }
                         title="Advanced Options"
                         buttonStyle={{ backgroundColor: 'transparent', padding: 20,  alignSelf: 'flex-start'}}
                         titleStyle={{ color: 'black', marginLeft: 20 }}
-                    />                                                           
+                    />
                     {/* <Button title='Se Déconnecter' onPress={() => navigation.navigate('Login')} /> */}
-                    {/* <Button title='Sign Out' onPress={() => onSignOut ()}                         
+                    {/* <Button title='Sign Out' onPress={() => onSignOut ()}
                     buttonStyle={{ backgroundColor: 'red', padding: 10}} /> */}
                 </View>
             </View>
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
         borderRadius: 50,
     },
     followersText: {
-        fontSize: 12, 
+        fontSize: 12,
     },
     input: {
         height: 40,
@@ -126,6 +126,7 @@ const styles = StyleSheet.create({
     text: {
         color : 'black',
         marginLeft: 20,
+        marginRight: 20,
     },
 });
 

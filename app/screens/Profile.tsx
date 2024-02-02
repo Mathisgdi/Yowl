@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
         borderRadius: 50,
     },
     followersText: {
-        fontSize: 12, 
+        fontSize: 12,
     },
 });
 

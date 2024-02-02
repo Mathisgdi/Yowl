@@ -80,7 +80,7 @@ function App() {
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="Settings" component={Settings} />
-        <Stack.Screen name="Privacy" component={Privacy} /> 
+        <Stack.Screen name="Privacy" component={Privacy} />
       </Stack.Navigator>
     </NavigationContainer>
   );

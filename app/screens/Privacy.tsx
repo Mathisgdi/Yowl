@@ -45,10 +45,10 @@ const Privacy = () => {
                             Processing is necessary for the performance of a task carried out in the public interest or in the exercise of official authority vested in the controller;
                             The processing is necessary for the purposes of the legitimate interests pursued by the controller or by a third party, unless the interests or fundamental rights and freedoms of the data subject which require the protection of personal data prevail, in particular where the data subject is a child.
                         </Text>
-                        <Text style={styles.followersText}>                             
+                        <Text style={styles.followersText}>
                             ARTICLE 3: PERSONAL DATA COLLECTED AND PROCESSED WHEN BROWSING THE APPLICATION
                         </Text>
-                        <Text style={styles.followersText}> 
+                        <Text style={styles.followersText}>
                             Article 3.1: Data collected
                             The personal data collected in the context of our activity is as follows:
                             surname
@@ -76,10 +76,10 @@ const Privacy = () => {
                             *Article 3.5 : Cookies policy
                             History of interactions with posts
                         </Text>
-                        <Text style={styles.followersText}>                             
+                        <Text style={styles.followersText}>
                             ARTICLE 4: DATA CONTROLLER AND DATA PROTECTION OFFICER
                         </Text>
-                        <Text style={styles.followersText}> 
+                        <Text style={styles.followersText}>
                             Article 4.1: The data controller
                             Personal data is collected by JOIN, a company with capital of 10,000, registered under the number **RCS BORDEAUX B 517 403 572 **.
                             The data controller can be contacted as follows:
@@ -91,10 +91,10 @@ const Privacy = () => {
                             Mathis Ghidotti, Bruges, 07 82 25 66 78, mathis.join@gmail.com
                             If, after having contacted us, you feel that your "Informatique et Libertés" rights have not been respected, you can send a complaint to the CNIL.
                         </Text>
-                        <Text style={styles.followersText}>                             
+                        <Text style={styles.followersText}>
                             ARTICLE 5: USERS' RIGHTS REGARDING DATA COLLECTION AND PROCESSING
                         </Text>
-                        <Text style={styles.followersText}> 
+                        <Text style={styles.followersText}>
                             All users concerned by the processing of their personal data may avail themselves of the following rights, pursuant to European Regulation 2016/679 and the French Data Protection Act (Law 78-17 of January 6, 1978):
                             Right of access, rectification and right to erasure of data (laid down respectively in Articles 15, 16 and 17 of the RGPD) ;
                             Right to data portability (article 20 of the RGPD);
@@ -106,10 +106,10 @@ const Privacy = () => {
                             In order for the data controller to comply with the user's request, the user may be required to provide certain information such as: first and last names, e-mail address and account, personal space or subscriber number.
                             Visit cnil.fr for more information on your rights.
                         </Text>
-                        <Text style={styles.followersText}>                             
+                        <Text style={styles.followersText}>
                             ARTICLE 6: CONDITIONS FOR MODIFYING THE PRIVACY POLICY
                         </Text>
-                        <Text style={styles.followersText}> 
+                        <Text style={styles.followersText}>
                             The publisher of the JOIN application reserves the right to modify this Policy at any time in order to ensure that users of the application comply with current legislation.
                             Any modifications will not affect purchases previously made on the application, which remain subject to the Policy in force at the time of purchase and as accepted by the user at the time of purchase validation.
                             The user is invited to familiarize himself/herself with this Policy each time he/she uses our services, without the need for formal notification.
@@ -119,7 +119,7 @@ const Privacy = () => {
                     </View>
 
                 </View>
-  
+
         </ScrollView>
 
     );
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
         padding: 20
     },
     followersText: {
-        fontSize: 15, 
+        fontSize: 15,
     },
     scrollView: {
         marginHorizontal: 20,
