@@ -34,7 +34,7 @@ const Login = ({ navigation }) => {
                 <ActivityIndicator size="large" color="#0000ff" />
             ) : (
                 <>
-                    <Text style={styles.login} onPress={SignIn}>LOGIN</Text>
+                    <Button title='LOGIN' onPress={SignIn}></Button>
                     <Button title="Register here" onPress={() => navigation.navigate('Register')}></Button>
                 </>
             )}
