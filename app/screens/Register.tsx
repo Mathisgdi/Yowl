@@ -26,10 +26,10 @@ const Register = ({ navigation }) => {
   const [addData, setAddData] = useState("");
 
   const addField = async (text: string) => {
-    // await setDoc(doc(db, "username", text), {
-    //   field: text,
-    //   UID: auth.currentUser.uid,
-    // });
+    await setDoc(doc(db, "username", text), {
+      field: text,
+      UID: auth.currentUser.uid,
+    });
     updateProfile(auth.currentUser, {
       displayName: addData,
     });
