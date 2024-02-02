@@ -1,6 +1,6 @@
 # Yowl
 
-Welcome to the Yowl project, your application to communicate with your friends and your favorite influencors.
+Welcome to Yowl project, your application to communicate with your friends and your favorite influencers.
 
 ## Table of Contents
 
@@ -22,7 +22,7 @@ Welcome to the Yowl project, your application to communicate with your friends a
 
 - **Explore Community Posts**: Browse through an extensive collection of posts with attractive details and images.
 - **Post your thoughts**: Create a post to say anything you want.
-- **Following**: Manage your following to talk with your friends and favorite influencors.
+- **Following**: Manage your following to talk with your friends and favorite influencers.
 
 ## 📦 Installation
 
@@ -57,7 +57,7 @@ Welcome to the Yowl project, your application to communicate with your friends a
     npx expo start
     ```
 
-Press w to open on the web or scann the QR Code of the terminal on your phone.
+Press w to open on the web or scan the QR Code in the terminal on your phone.
 To see more details on expo, refer to the README in the ".expo" folder.
 
 - Access the URL `http://localhost:8081` in your browser and adapt it with phone format.
