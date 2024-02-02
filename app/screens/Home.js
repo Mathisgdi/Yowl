@@ -27,19 +27,16 @@ const ShowData = () => {
 
   return (
     <ScrollView>
-      <View>
+      <View style={styles.background}>
         {postData.map((post) => (
           <View key={post.id} style={styles.headerContainer}>
-              <View style={styles.userContainer}>
-                <Image 
-                  style={styles.image} 
-                  source={{ uri: post.imageUri }} 
-                />
-                <Text style={styles.username}>{post.username}</Text>  
-              </View>
-              <View style={styles.post} >
-                <Text style={styles.postText} >{post.post}</Text>
-              </View>
+            <View style={styles.userContainer}>
+              <Image style={styles.image} source={{ uri: post.imageUri }} />
+              <Text style={styles.username}>{post.username}</Text>
+            </View>
+            <View style={styles.post}>
+              <Text style={styles.postText}>{post.post}</Text>
+            </View>
           </View>
         ))}
       </View>
@@ -87,6 +84,8 @@ const styles = StyleSheet.create({
     opacity: 0.7,
     padding: 10,
   },
-
+  background: {
+    backgroundColor: '#fff',
+  },
 
 });

@@ -23,23 +23,35 @@ const Login = ({ navigation }) => {
         }
     }
     return (
-        <View style={styles.container} >
+      <View style={styles.container}>
+        <Image style={styles.logo} source={require("../../assets/logo.png")} />
+        <Text style={styles.title}>Email</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="example@mail.com"
+          onChangeText={(text) => setEmail(text)}
+        ></TextInput>
 
-            <Image style={styles.logo} source={require('../../assets/logo.png')}/>
-            <Text style={styles.title}>Email</Text>
-            <TextInput style={styles.input} placeholder=' example@mail.com' onChangeText={(text) => setEmail(text)}></TextInput>
-            <Text style={styles.title}>Password</Text>
-            <TextInput secureTextEntry={true} style={styles.input} placeholder=' Enter your password' onChangeText={(text) => setPassword(text)}></TextInput>
-            {loading ? (
-                <ActivityIndicator size="large" color="#0000ff" />
-            ) : (
-                <>
-                    <Button title='LOGIN' onPress={SignIn}></Button>
-                    <Button title="Register here" onPress={() => navigation.navigate('Register')}></Button>
-                </>
-            )}
-    </View>
-  );
+        <Text style={styles.title}>Password</Text>
+        <TextInput
+          secureTextEntry={true}
+          style={styles.input}
+          placeholder="Enter your password"
+          onChangeText={(text) => setPassword(text)}
+        ></TextInput>
+        {loading ? (
+          <ActivityIndicator size="large" color="#0000ff" />
+        ) : (
+          <>
+            <Button title="LOGIN" onPress={SignIn}></Button>
+            <Button
+              title="Register here"
+              onPress={() => navigation.navigate("Register")}
+            ></Button>
+          </>
+        )}
+      </View>
+    );
 };
 
 export default Login;
@@ -47,28 +59,30 @@ export default Login;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    },
+    backgroundColor: "#fff",
+  },
     logo: {
-        display: 'flex',
-        alignSelf: 'center',
-        margin: 20,
-        width: 150,
-        height: 150,
-    },
-    input: {
-        height: 40,
-        margin: 12,
-        borderWidth: 1,
-        borderRadius: 10
-    },
-    login: {
-        textAlign: 'center',
+    display: "flex",
+    alignSelf: "center",
+    margin: 20,
+    width: 150,
+    height: 150,
+  },
+  input: {
+    height: 40,
+    margin: 12,
+    paddingLeft: 10,
 
-    },
-    title : {
-        color: 'black',
-        fontFamily: 'Mitr',
-        fontSize: 18,
-    },
+    borderWidth: 1,
+    borderRadius: 10,
+  },
+  login: {
+    textAlign: "center",
+  },
+  title: {
+    color: "black",
+    fontFamily: "Mitr",
+    fontSize: 18,
+    marginLeft: 20,
+  },
 });
