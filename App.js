@@ -26,7 +26,6 @@ function HomeTab (){
       screenOptions={({route}) => ({
           tabBarIcon: ({focused,color,size}) =>{
             let iconName;
-
             if (route.name == "Home"){
               iconName = focused // if focused, return home sinon return home-outline
                 ? 'home'
