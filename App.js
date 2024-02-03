@@ -57,7 +57,7 @@ function HomeTab (){
         })}
       >
         {/* énumère chaque écran avec ses composant importé en haut de la page */}
-      <Tab.Screen name="Home" component={Home} options = {{tabBarShowLabel : false,  headerShown: false}}  /> 
+      <Tab.Screen name="Home" component={Home} options = {{tabBarShowLabel : false,  headerShown: false}}  />
       <Tab.Screen name="Search" component={Search} options = {{tabBarShowLabel : false,  headerShown: false}} />
       <Tab.Screen name="Create" component={Create} options = {{tabBarShowLabel : false,  headerShown: false}} />
       {/* <Tab.Screen name="Community" component={Community} options = {{tabBarShowLabel : false,  headerShown: false}} /> */}
@@ -73,7 +73,7 @@ function App() {
         <Stack.Screen
           name="Home"
           component={HomeTab}
-          options={{ title: "Join" }}
+          options={{ title: "Join", headerShown: true, headerLeft: null }}
         />
         {/* la navbar n'est pas affiché sur la page login */}
         <Stack.Screen name="Login" component={Login} />
