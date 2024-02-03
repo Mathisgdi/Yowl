@@ -19,10 +19,14 @@ import { getDownloadURL, getStorage, ref, uploadBytesResumable, downloadURL } fr
 
 const auth = FIREBASE_AUTH;
 const db = FIREBASE_DB;
+// const firebase = require('firebase');
+// require ('firebase/storage');
 const storage = getStorage();
+// const storage = firebase.storage();
 const AddPostScreen = () => {
   const [post, setPost] = useState(null);
   const [image, setImage] = useState(null);
+
   // Pour que le clavier descende quand on appuie en dehors de l'input
   const handlePressOutside = () => {
     Keyboard.dismiss();
@@ -42,9 +46,9 @@ const AddPostScreen = () => {
       quality: 1,
     });
 
-    console.log(image);
+    console.log("voici l'image", image);
     // console.log(image.uri);
-    console.log(image.assets[0].uri);
+    console.log("voici l'uri de l'image ",image.assets[0].uri);
     if (!image.canceled) {
       setImage(image.assets[0].uri);
     }
@@ -61,34 +65,47 @@ const AddPostScreen = () => {
       const response = await uploadBytesResumable(imageRef, image, {
         contentType: 'image/jpeg', // Vous pouvez ajuster le type de contenu en fonction du type d'image que vous utilisez
       });
-      console.log("Image uploaded!", response);
+      // uploadBytes(imageRef, file).then((snapshot) => {
+      //   console.log('Uploaded a blob or file!',snapshot);
+      // });
 
-      const URLimage = await downloadURL
-      
+      console.log("Image uploaded!", response);
+      console.log("Image ref: ", response.ref);
+      // console.log("Voici le contenu de setImage",setImage()) -> undefined
+
+      const URLimage = await getDownloadURL(response.ref);
+      console.log("Image URL: ", URLimage);
+
+  //     const URLimage = await imageRef.getDownloadURL()
+  // .then((url) => {
+  //   console.log('URL: ', url);
+  // })
+  // .catch((error) => {
+  //   console.error('Error getting download URL: ', error);
+  // });
 
       // Ajoutez l'URI de l'image dans la base de données
       await addDoc(collection(db, "posts"), {
         userID: auth.currentUser.uid,
         post: post,
         likes: "",
-        imageUri: URLimage, // Ajoutez l'URI de l'image ici
+        imageUri: URLimage, // Ajoutez l'URL de téléchargement de l'image ici
         username: getUsername(),
         timestamp: serverTimestamp(),
       });
+      
     } else {
       // Si aucune image n'est sélectionnée, ajoutez le post sans image
+      await addDoc(collection(db, "posts"), {
+        userID: auth.currentUser.uid,
+        post: post,
+        likes: "",
+        imageUri :"",
+        username : getUsername(),
+        timestamp: serverTimestamp(),
+      });
+      
 
-
-
-
-    await addDoc(collection(db, "posts"), {
-      userID: auth.currentUser.uid,
-      post: post,
-      likes: "",
-      imageUri :"",
-      username : getUsername(),
-      timestamp: serverTimestamp(),
-    })
       // .then(() => {
       //   console.log("Post: ", post);
       //   console.log("Document written with ID: ", addPost.id);
@@ -114,7 +131,8 @@ const AddPostScreen = () => {
     <TouchableWithoutFeedback onPress={handlePressOutside}>
     <View style={styles.container}>
       <View style={styles.InputWrapper}>
-      {image != null ? <Image source={{ uri: image }} style={{ width: 200, height: 200 }} /> : null}
+      {image && image !== '' ? <Image source={{ uri: image }} style={{ width: 200, height: 200 }} /> : null}
+
         <TextInput
           style={styles.Input}
           placeholder="What's your mind?"
