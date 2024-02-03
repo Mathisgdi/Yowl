@@ -26,12 +26,18 @@ const Login = ({ navigation }) => {
   };
 
   const SignIn = async () => {
+    if (email === "" || password === "") {
+      alert("Please fill in all fields");
+      return;
+    }
+
     setLoading(true);
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
       navigation.navigate("Home");
       console.log(response);
     } catch (e) {
+      alert("Invalid email or password");
       console.log(e);
     } finally {
       setLoading(false);
