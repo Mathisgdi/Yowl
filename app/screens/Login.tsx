@@ -1,27 +1,44 @@
-import { View, Text, StyleSheet, TextInput, ActivityIndicator, Button, Image} from 'react-native';
-import React, { useState } from 'react';
-import { FIREBASE_AUTH } from '../../FirebaseConfig';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  ActivityIndicator,
+  Button,
+  Image,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from "react-native";
+import React, { useState } from "react";
+import { FIREBASE_AUTH } from "../../FirebaseConfig";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 
 const Login = ({ navigation }) => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [loading, setLoading] = useState(false);
-    const auth = FIREBASE_AUTH;
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const auth = FIREBASE_AUTH;
+  const handlePressOutside = () => {
+    Keyboard.dismiss();
+  };
 
-    const SignIn = async () => {
-        setLoading(true);
-        try {
-            const response = await signInWithEmailAndPassword(auth, email, password);
-            navigation.navigate('Home');
-            console.log(response);
-        } catch (e) {
-            console.log(e);
-        } finally {
-            setLoading(false);
-        }
+  const SignIn = async () => {
+    setLoading(true);
+    try {
+      const response = await signInWithEmailAndPassword(auth, email, password);
+      navigation.navigate("Home");
+      console.log(response);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
     }
-    return (
+  };
+  return (
+    <TouchableWithoutFeedback onPress={handlePressOutside}>
       <View style={styles.container}>
         <Image style={styles.logo} source={require("../../assets/logo.png")} />
         <Text style={styles.title}>Email</Text>
@@ -50,7 +67,8 @@ const Login = ({ navigation }) => {
           </>
         )}
       </View>
-    );
+    </TouchableWithoutFeedback>
+  );
 };
 
 export default Login;
@@ -60,7 +78,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
   },
-    logo: {
+  logo: {
     display: "flex",
     alignSelf: "center",
     margin: 20,
@@ -80,7 +98,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: "black",
-    fontFamily: "Mitr",
+    // fontFamily: "Mitr",
     fontSize: 18,
     marginLeft: 20,
   },

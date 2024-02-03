@@ -9,7 +9,6 @@ import React, { useState, useEffect } from "react";
 import { FIREBASE_DB } from "../../FirebaseConfig";
 import { collection, setDoc, getDocs, onSnapshot, query } from "firebase/firestore";
 
-
 const ShowData = () => {
   const db = FIREBASE_DB;
   const [postData, setPostData] = useState([]);
@@ -77,9 +76,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontSize: 20,
   },
-  post : {
-    alignItems: 'center',
-  },
+  // post : {
+  //   alignItems: 'center',
+  // },
   postText : {
     fontSize: 16,
     opacity: 0.7,

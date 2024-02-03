@@ -7,6 +7,7 @@ import {
   Button,
   Image,
   Keyboard,
+  TouchableWithoutFeedback
 } from "react-native";
 import React, { useState } from "react";
 import { FIREBASE_AUTH, FIREBASE_DB } from "../../FirebaseConfig";
@@ -24,6 +25,10 @@ const Register = ({ navigation }) => {
   const db = FIREBASE_DB;
   const [accept, setAccept] = useState(false);
   const [addData, setAddData] = useState("");
+  const handlePressOutside = () => {
+    Keyboard.dismiss();
+  };
+  
 
   const addField = async (text: string) => {
     await setDoc(doc(db, "username", text), {
@@ -70,6 +75,7 @@ const Register = ({ navigation }) => {
   };
 
   return (
+    <TouchableWithoutFeedback onPress={handlePressOutside}>
     <ScrollView style={styles.container}>
       <Image style={styles.logo} source={require("../../assets/logo.png")} />
 
@@ -122,6 +128,7 @@ const Register = ({ navigation }) => {
         </>
       )}
     </ScrollView>
+    </TouchableWithoutFeedback>
   );
 };
 

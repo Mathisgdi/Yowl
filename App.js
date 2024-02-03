@@ -9,7 +9,7 @@ import Ionicons from
 import Home from './app/screens/Home';
 import Search from './app/screens/Search';
 import Create from './app/screens/Create';
-import Community from './app/screens/Community';
+// import Community from './app/screens/Community';
 import Profile from './app/screens/Profile';
 import Login from './app/screens/Login';
 import Register from './app/screens/Register';
@@ -60,7 +60,7 @@ function HomeTab (){
       <Tab.Screen name="Home" component={Home} options = {{tabBarShowLabel : false,  headerShown: false}}  /> 
       <Tab.Screen name="Search" component={Search} options = {{tabBarShowLabel : false,  headerShown: false}} />
       <Tab.Screen name="Create" component={Create} options = {{tabBarShowLabel : false,  headerShown: false}} />
-      <Tab.Screen name="Community" component={Community} options = {{tabBarShowLabel : false,  headerShown: false}} />
+      {/* <Tab.Screen name="Community" component={Community} options = {{tabBarShowLabel : false,  headerShown: false}} /> */}
       { <Tab.Screen name="Profile" component={Profile} options = {{tabBarShowLabel : false, headerBackTitleVisible : true, headerShown: false }} /> }
     </Tab.Navigator>
   )
