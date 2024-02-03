@@ -5,7 +5,7 @@ import {
     Text,
     Image,
 } from 'react-native';
-import { Button } from 'react-native-elements';
+import { Button, Card } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { FIREBASE_AUTH, FIREBASE_DB } from "../../FirebaseConfig";
 import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
@@ -31,7 +31,7 @@ const Profile = ({navigation}) => {
               }}
               onPress={() => navigation.navigate("Settings")}
             />
-                    <Text>{getUsername()}</Text>
+            <Card.Title style={styles.text}>{getUsername()}</Card.Title>
             <View style={styles.headerContainer}>
               <Image
                 style={styles.image}
@@ -70,6 +70,10 @@ const styles = StyleSheet.create({
     },
     followersText: {
         fontSize: 12,
+    },
+    text: {
+      marginBottom : - 15,
+      fontSize : 24
     },
 });
 
