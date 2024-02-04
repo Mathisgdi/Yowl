@@ -173,7 +173,6 @@ const styles = StyleSheet.create({
   },
   title: {
     color: "black",
-    fontFamily: "Mitr",
     fontSize: 18,
     marginLeft: 20,
   },

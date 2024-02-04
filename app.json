@@ -11,6 +11,14 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "plugin" : [
+      [
+        "expo-image-picker",
+        {
+          "cameraPermission": "Allow JOIN to access your camera"
+        }
+      ]
+    ],
     "assetBundlePatterns": [
       "**/*"
     ],

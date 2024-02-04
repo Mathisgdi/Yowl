@@ -1,11 +1,14 @@
 import { StyleSheet, View, Text, Image, ScrollView } from "react-native";
 import React, { useState, useEffect } from "react";
-import { FIREBASE_DB } from "../../FirebaseConfig";
 import { collection, onSnapshot } from "firebase/firestore";
+import { formatDistanceToNow } from 'date-fns';
+import { FIREBASE_DB } from "../../FirebaseConfig";
+
 
 const ShowData = () => {
   const db = FIREBASE_DB;
   const [postData, setPostData] = useState([]);
+
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "posts"), (querySnapshot) => {
       const postsData = [];
@@ -27,17 +30,26 @@ const ShowData = () => {
           .map((post) => (
             <View key={post.id} style={styles.headerContainer}>
               <View style={styles.userContainer}>
-                <Image style={styles.imageProfile} />
+              <Image style={styles.imageProfile} source={{uri: post.imageUriProfile}} />
                 <Text style={styles.username}>{post.username}</Text>
-              </View>
-              {post.imageUri && (
+                
+
+        </View>
+        {post.timestamp && (
+          <Text style={styles.timestamp}>
+            {formatDistanceToNow(post.timestamp.toDate(), { includeSeconds: true })} ago
+          </Text>
+        )}
+              
+              {post.imageUriPost && (
                 <Image
                   style={styles.imagePost}
-                  source={{ uri: post.imageUri }}
+                  source={{ uri: post.imageUriPost }}
                 />
               )}
               <View style={styles.post}>
                 <Text style={styles.postText}>{post.post}</Text>
+                
               </View>
             </View>
           ))}
@@ -58,11 +70,17 @@ const styles = StyleSheet.create({
   userContainer: {
     flexDirection: "row",
   },
+  timestamp: {
+    alignSelf : "flex-start",
+    fontSize: 12,
+    color: "gray",
+    marginLeft: 70,
+    marginTop: -25,
+  },
   imageProfile: {
     width: 50,
     height: 50,
     borderRadius: 50,
-    backgroundColor: "#F5F5DC",
     margin: 10,
   },
   imagePost: {
@@ -71,6 +89,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     margin: 10,
     backgroundColor: "#F5F5DC",
+    marginTop: 30,
   },
   username: {
     marginTop: 20,
@@ -83,6 +102,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     opacity: 0.7,
     padding: 10,
+    marginTop: 20,
   },
   background: {
     backgroundColor: "#fff",

@@ -13,6 +13,22 @@ const auth = FIREBASE_AUTH;
 const db = FIREBASE_DB;
 const storage = getStorage();
 
+export const getUsernameProfilePicture = async () => {
+  return new Promise((resolve, reject) => {
+    const auth = FIREBASE_AUTH;
+    const user = auth.currentUser;
+    
+    if (user && user.photoURL) {
+      const photoURL = user.photoURL;
+      const cacheBustingURL = photoURL + "?timestamp=" + new Date().getTime();
+      console.log("user.photoURL depuis home", cacheBustingURL);
+      resolve(cacheBustingURL);
+    } else {
+      reject("No user signed in or no photoURL available");
+    }
+  });
+}
+
 const AddPostScreen = () => {
   const [post, setPost] = useState(null);
   const [image, setImage] = useState(null);
@@ -27,7 +43,7 @@ const AddPostScreen = () => {
   // Récupère l'image de la galerie
   const pickImage = async () => {
     let image = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
@@ -42,7 +58,11 @@ const AddPostScreen = () => {
 
   // Ajoute un post dans la base de données
   const addPost = async (data) => {
-    // Vérifie si le post est vide et si aucune image n'est sélectionnée
+    try{
+      const imageUriProfile = await getUsernameProfilePicture();
+    console.log("imageUriProfile", imageUriProfile);
+
+      
     if ((!post || post.trim() === "") && !image){
       Alert.alert("Error", "You need to write something or pick an image to post!");
       return;
@@ -77,7 +97,8 @@ const AddPostScreen = () => {
               userID: auth.currentUser.uid,
               post: post,
               likes: "",
-              imageUri: downloadURL,
+              imageUriPost: downloadURL,
+              imageUriProfile: imageUriProfile,
               username: getUsername(),
               timestamp: serverTimestamp(),
             })
@@ -103,7 +124,8 @@ const AddPostScreen = () => {
         userID: auth.currentUser.uid,
         post: post,
         likes: "",
-        imageUri: "",
+        imageUriPost: "",
+        imageUriProfile: imageUriProfile,
         username: getUsername(),
         timestamp: serverTimestamp(),
       })
@@ -118,7 +140,11 @@ const AddPostScreen = () => {
           console.error("Error when the post without image is added", error);
         });
     }
-  };
+    }catch(error){  
+      console.error("Error adding document: ", error);
+    }
+    
+  }
 
   return (
     <TouchableWithoutFeedback onPress={handlePressOutside}>
@@ -147,13 +173,6 @@ const AddPostScreen = () => {
           <Button title="Add Post" onPress={addPost} />
         </View>
         <ActionButton buttonColor="#57A7FF">
-          <ActionButton.Item
-            buttonColor="#57A7FF"
-            title="Take photo"
-            onPress={() => console.log("notes tapped!")}
-          >
-            <Icon name="camera" style={styles.actionButtonIcon} />
-          </ActionButton.Item>
           <ActionButton.Item
             buttonColor="#57A7FF"
             title="Choose photo"
