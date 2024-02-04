@@ -5,54 +5,57 @@ import {
   Image,
   ScrollView,
   TextInput,
-} from 'react-native';
+} from "react-native";
 import React, { useState, useEffect } from "react";
 import { FIREBASE_DB } from "../../FirebaseConfig";
-import { collection, setDoc, getDocs, onSnapshot, query } from "firebase/firestore";
+import {
+  collection,
+  setDoc,
+  getDocs,
+  onSnapshot,
+  query,
+} from "firebase/firestore";
 
 function Search() {
-
   const db = FIREBASE_DB;
   const [usernameData, setUserData] = useState([]);
   useEffect(() => {
-    const unsubscribe = onSnapshot(collection(db, "username"), (querySnapshot) => {
-      const usernameData = [];
-      querySnapshot.forEach((doc) => {
-        usernameData.push({ id: doc.id, ...doc.data() });
-      });
-      setUserData(usernameData);
-    });
+    const unsubscribe = onSnapshot(
+      collection(db, "username"),
+      (querySnapshot) => {
+        const usernameData = [];
+        querySnapshot.forEach((doc) => {
+          usernameData.push({ id: doc.id, ...doc.data() });
+        });
+        setUserData(usernameData);
+      }
+    );
     return () => {
       unsubscribe(); // Lorsque le composant est démonté, cela arrête la surveillance des modifications
     };
   }, [db]);
 
-
   return (
     <View style={styles.all}>
-    <TextInput style={styles.input} placeholder='Search ...'></TextInput>
-    <ScrollView>
+      <TextInput style={styles.input} placeholder="Search ..."></TextInput>
+      <ScrollView>
         {usernameData.map((username) => (
           <View key={username.id} style={styles.headerContainer}>
-              <View style={styles.userContainer}>
-                <Image 
-                  style={styles.image} 
-                  source={{ uri: username.imageUri }} 
-                />
-                <Text style={styles.username}>{username.field}</Text>  
-              </View>
+            <View style={styles.userContainer}>
+              <Image style={styles.image} source={{ uri: username.imageUri }} />
+              <Text style={styles.username}>{username.field}</Text>
+            </View>
           </View>
         ))}
       </ScrollView>
-      </View>
-
+    </View>
   );
 }
 
 export default Search;
 
 const styles = StyleSheet.create({
-  all : {
+  all: {
     backgroundColor: "#fff",
   },
   headerContainer: {
@@ -60,7 +63,7 @@ const styles = StyleSheet.create({
     marginRight: 20,
     padding: 20,
     borderBottomWidth: 1,
-    borderBottomColor: 'black',
+    borderBottomColor: "black",
     // borderRadius: 10,
     // backgroundColor: 'white',
     // elevation: 3, // Pour l'ombre sur Android
@@ -74,15 +77,14 @@ const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 1,
     borderRadius: 10,
-    padding : 10,
+    padding: 10,
     margin: 20,
-    position: 'relative',
-    top: 0
-},
-  userContainer : {
-    flexDirection: 'row',
+    position: "relative",
+    top: 0,
+  },
+  userContainer: {
+    flexDirection: "row",
     // justifyContent: 'space-between',
-
   },
   image: {
     width: 50,
@@ -90,8 +92,8 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     backgroundColor: "#F5F5DC",
   },
-  username : {
+  username: {
     fontSize: 16,
-    padding : 15,
+    padding: 15,
   },
 });

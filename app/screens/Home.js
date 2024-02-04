@@ -1,9 +1,8 @@
 import { StyleSheet, View, Text, Image, ScrollView } from "react-native";
 import React, { useState, useEffect } from "react";
 import { collection, onSnapshot } from "firebase/firestore";
-import { formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNow } from "date-fns";
 import { FIREBASE_DB } from "../../FirebaseConfig";
-
 
 const ShowData = () => {
   const db = FIREBASE_DB;
@@ -30,17 +29,21 @@ const ShowData = () => {
           .map((post) => (
             <View key={post.id} style={styles.headerContainer}>
               <View style={styles.userContainer}>
-              <Image style={styles.imageProfile} source={{uri: post.imageUriProfile}} />
+                <Image
+                  style={styles.imageProfile}
+                  source={{ uri: post.imageUriProfile }}
+                />
                 <Text style={styles.username}>{post.username}</Text>
-                
+              </View>
+              {post.timestamp && (
+                <Text style={styles.timestamp}>
+                  {formatDistanceToNow(post.timestamp.toDate(), {
+                    includeSeconds: true,
+                  })}{" "}
+                  ago
+                </Text>
+              )}
 
-        </View>
-        {post.timestamp && (
-          <Text style={styles.timestamp}>
-            {formatDistanceToNow(post.timestamp.toDate(), { includeSeconds: true })} ago
-          </Text>
-        )}
-              
               {post.imageUriPost && (
                 <Image
                   style={styles.imagePost}
@@ -49,7 +52,6 @@ const ShowData = () => {
               )}
               <View style={styles.post}>
                 <Text style={styles.postText}>{post.post}</Text>
-                
               </View>
             </View>
           ))}
@@ -71,7 +73,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   timestamp: {
-    alignSelf : "flex-start",
+    alignSelf: "flex-start",
     fontSize: 12,
     color: "gray",
     marginLeft: 70,

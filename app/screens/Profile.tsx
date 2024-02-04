@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  Image,
-  StyleSheet,
-  Alert,
-  Text,
-} from "react-native";
+import { View, Image, StyleSheet, Alert, Text } from "react-native";
 import { Button, Card } from "react-native-elements";
 import Icon from "react-native-vector-icons/Ionicons";
 import { FIREBASE_AUTH, FIREBASE_DB } from "../../FirebaseConfig";
@@ -39,7 +33,7 @@ const Profile = ({ navigation }) => {
     console.log("voici l'image", pickedImage);
     console.log("voici l'uri de l'image ", pickedImage.assets[0].uri);
     await user.reload();
-    console.log("voici user.photoURL",user.photoURL);
+    console.log("voici user.photoURL", user.photoURL);
 
     if (!pickedImage.canceled) {
       setImage(pickedImage.assets[0].uri);
@@ -52,7 +46,7 @@ const Profile = ({ navigation }) => {
       storage,
       `profileImages/${auth.currentUser.uid}/${Date.now()}` // Nom de l'image avec son chemin dans le storage
     );
-    console.log("imageRef", imageRef); 
+    console.log("imageRef", imageRef);
 
     const uploadTask = uploadBytesResumable(imageRef, blob); // Upload l'image
 
@@ -76,27 +70,27 @@ const Profile = ({ navigation }) => {
             username: getUsername(),
             timestamp: serverTimestamp(),
           })
-          .then(() => {
-            // Met à jour l'URL de la photo de profil de l'utilisateur
-            updateProfile(auth.currentUser, {
-              photoURL: downloadURL,
-            })
-              .then(() => {
-                setProgress(0); // Réinitialise la progression
-                setShowProgress(false); // Cache la progression
-                Alert.alert(
-                  "Image uploaded!",
-                  "Your profile picture has been updated successfully!"
-                );
+            .then(() => {
+              // Met à jour l'URL de la photo de profil de l'utilisateur
+              updateProfile(auth.currentUser, {
+                photoURL: downloadURL,
               })
-              .catch((error) => {
-                console.error("Error when updating user profile", error);
-              });
-          })
-          .catch((error) => {
-            console.error("Error when the post with image is added", error);
-          });
-      });
+                .then(() => {
+                  setProgress(0); // Réinitialise la progression
+                  setShowProgress(false); // Cache la progression
+                  Alert.alert(
+                    "Image uploaded!",
+                    "Your profile picture has been updated successfully!"
+                  );
+                })
+                .catch((error) => {
+                  console.error("Error when updating user profile", error);
+                });
+            })
+            .catch((error) => {
+              console.error("Error when the post with image is added", error);
+            });
+        });
       }
     );
   };
@@ -117,10 +111,7 @@ const Profile = ({ navigation }) => {
           <Card.Title style={styles.text}>{getUsername()}</Card.Title>
           <View style={styles.headerContainer}>
             {image && image !== "" ? (
-              <Image
-                style={styles.image}
-                source={{ uri: image }}
-              />
+              <Image style={styles.image} source={{ uri: image }} />
             ) : (
               <Image
                 style={styles.image}
@@ -130,8 +121,8 @@ const Profile = ({ navigation }) => {
             <Text style={styles.followersText}> Followers: 1000 </Text>
             <Text style={styles.followersText}> Following: 500 </Text>
           </View>
-          
-          {showProgress && ( 
+
+          {showProgress && (
             <View style={styles.progressBarContainer}>
               <View style={[styles.progressBar, { width: `${progress}%` }]} />
             </View>
@@ -162,7 +153,7 @@ export const getUsernameProfilePicture = async () => {
   } else {
     return "No user signed in";
   }
-}
+};
 
 export const getUsername = () => {
   const auth = FIREBASE_AUTH;

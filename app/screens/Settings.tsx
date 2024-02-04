@@ -19,7 +19,7 @@ const Settings = ({ navigation }) => {
   const Logout = () => {
     signOut(auth)
       .then(() => {
-       navigation.navigate("Login");
+        navigation.navigate("Login");
       })
       .catch((error) => {
         console.log(error);
