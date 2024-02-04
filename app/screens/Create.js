@@ -1,158 +1,168 @@
-import React, { useState, useContex, useEffect } from "react";
-import { View, Text,Image,Platform, StyleSheet, Alert, TouchableWithoutFeedback, Button, TextInput, Keyboard } from "react-native";
+import React, { useState, } from "react";
+import {View, Image, StyleSheet, Alert, TouchableWithoutFeedback, Button, TextInput, Keyboard} from "react-native";
 import { FIREBASE_DB } from "../../FirebaseConfig";
-import {
-  addDoc,
-  collection,
-  doc,
-  serverTimestamp,
-  setDoc,
-} from "firebase/firestore";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { FIREBASE_AUTH } from "../../FirebaseConfig";
-import ActionButton from 'react-native-action-button';
-import Icon from 'react-native-vector-icons/Ionicons';
-import * as ImagePicker from 'expo-image-picker';
-import { getUsername } from './Profile';
-import { getDownloadURL, getStorage, ref, uploadBytesResumable, downloadURL } from "firebase/storage";
-// import storage from '@react-native-firebase/storage';
-
+import ActionButton from "react-native-action-button";
+import Icon from "react-native-vector-icons/Ionicons";
+import * as ImagePicker from "expo-image-picker";
+import { getUsername } from "./Profile";
+import {getDownloadURL, getStorage, ref, uploadBytesResumable} from "firebase/storage";
 
 const auth = FIREBASE_AUTH;
 const db = FIREBASE_DB;
-// const firebase = require('firebase');
-// require ('firebase/storage');
 const storage = getStorage();
-// const storage = firebase.storage();
+
 const AddPostScreen = () => {
   const [post, setPost] = useState(null);
   const [image, setImage] = useState(null);
+  const [progress, setProgress] = useState(0);
+  const [showProgress, setShowProgress] = useState(false);
 
   // Pour que le clavier descende quand on appuie en dehors de l'input
   const handlePressOutside = () => {
     Keyboard.dismiss();
   };
 
-  // const storageRef = ref(storage, 'posts/mountains.jpg');
-  
-  // uploadBytes(storageRef, result).then((snapshot) => {
-  //   console.log('Uploaded a blob or file!');
-  // });
-  
+  // Récupère l'image de la galerie
   const pickImage = async () => {
     let image = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
     });
-
     console.log("voici l'image", image);
-    // console.log(image.uri);
-    console.log("voici l'uri de l'image ",image.assets[0].uri);
+    console.log("voici l'uri de l'image ", image.assets[0].uri);
+
     if (!image.canceled) {
       setImage(image.assets[0].uri);
     }
   };
 
+  // Ajoute un post dans la base de données
   const addPost = async (data) => {
-    if (!post || post.trim() === "") {
-      Alert.alert("Error", "You need to write something to post!");
+    // Vérifie si le post est vide et si aucune image n'est sélectionnée
+    if ((!post || post.trim() === "") && !image){
+      Alert.alert("Error", "You need to write something or pick an image to post!");
       return;
     }
-
     if (image) {
-      const imageRef = ref(storage, `images/${auth.currentUser.uid}/${Date.now()}`);
-      const response = await uploadBytesResumable(imageRef, image, {
-        contentType: 'image/jpeg', // Vous pouvez ajuster le type de contenu en fonction du type d'image que vous utilisez
-      });
-      // uploadBytes(imageRef, file).then((snapshot) => {
-      //   console.log('Uploaded a blob or file!',snapshot);
-      // });
-
-      console.log("Image uploaded!", response);
-      console.log("Image ref: ", response.ref);
-      // console.log("Voici le contenu de setImage",setImage()) -> undefined
-
-      const URLimage = await getDownloadURL(response.ref);
-      console.log("Image URL: ", URLimage);
-
-  //     const URLimage = await imageRef.getDownloadURL()
-  // .then((url) => {
-  //   console.log('URL: ', url);
-  // })
-  // .catch((error) => {
-  //   console.error('Error getting download URL: ', error);
-  // });
-
-      // Ajoutez l'URI de l'image dans la base de données
+      const response = await fetch(image);
+      const blob = await response.blob();
+      setShowProgress(true);
+      // Crée une référence de l'image dans le storage de firebase
+      const imageRef = ref(
+        storage,
+        `images/${auth.currentUser.uid}/${Date.now()}` // Nom de l'image avec son chemin dans le storage
+      );
+      const uploadTask = uploadBytesResumable(imageRef, blob); // Upload l'image
+      // Met à jour la barre de progression
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          setProgress(progress);
+        },
+        (error) => {
+          console.log("Erreur lors de l'upload de l'image", error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            console.log("URL de l'image: ", downloadURL);
+            // Ajoute le post avec l'URL de l'image dans la base de données
+            addDoc(collection(db, "posts"), {
+              userID: auth.currentUser.uid,
+              post: post,
+              likes: "",
+              imageUri: downloadURL,
+              username: getUsername(),
+              timestamp: serverTimestamp(),
+            })
+              .then(() => {
+                setImage(null); // Efface l'image
+                setProgress(0); // Réinitialise la progression
+                setPost(null); // Efface le post
+                setShowProgress(false); // Cache la progression
+                Alert.alert(
+                  "Post published!",
+                  "Your post has been published Successfully!"
+                );
+              })
+              .catch((error) => {
+                console.error("Error when the post with image is added", error);
+              });
+          });
+        }
+      );
+    } else {
+      // Si aucune image n'est sélectionnée, on ajoute le post sans image
       await addDoc(collection(db, "posts"), {
         userID: auth.currentUser.uid,
         post: post,
         likes: "",
-        imageUri: URLimage, // Ajoutez l'URL de téléchargement de l'image ici
+        imageUri: "",
         username: getUsername(),
         timestamp: serverTimestamp(),
-      });
-      
-    } else {
-      // Si aucune image n'est sélectionnée, ajoutez le post sans image
-      await addDoc(collection(db, "posts"), {
-        userID: auth.currentUser.uid,
-        post: post,
-        likes: "",
-        imageUri :"",
-        username : getUsername(),
-        timestamp: serverTimestamp(),
-      });
-      
-
-      // .then(() => {
-      //   console.log("Post: ", post);
-      //   console.log("Document written with ID: ", addPost.id);
-      //   Alert.alert(
-      //     "Post published!",
-      //     "Your post has been published Successfully!"
-      //   );
-      //   setPost(null);
-      // })
-      // .catch((error) => {
-      //   console.error("Error writing document: ", error);
-      // });
-  };
-  setImage(null);
-  setPost(null);
-  Alert.alert(
-    "Post published!",
-    "Your post has been published Successfully!"
-  );
+      })
+        .then(() => {
+          setPost(null); // Efface le post
+          Alert.alert(
+            "Post published!",
+            "Your post has been published Successfully!"
+          );
+        })
+        .catch((error) => {
+          console.error("Error when the post without image is added", error);
+        });
+    }
   };
 
   return (
     <TouchableWithoutFeedback onPress={handlePressOutside}>
-    <View style={styles.container}>
-      <View style={styles.InputWrapper}>
-      {image && image !== '' ? <Image source={{ uri: image }} style={{ width: 200, height: 200 }} /> : null}
+      <View style={styles.Container}>
+        <View style={styles.inputWrapper}>
+          {image && image !== "" ? (
+            <Image
+              source={{ uri: image }}
+              style={{ width: 300, height: 300 }}
+            />
+          ) : null}
+          <TextInput
+            style={styles.Input}
+            placeholder="What's your mind?"
+            multiline
+            numberOfLines={5}
+            value={post}
+            onChangeText={(content) => setPost(content)}
+          ></TextInput>
+          {showProgress && ( // Affiche la barre de progression uniquement si showProgress est true
+            <View style={styles.progressBarContainer}>
+              <View style={[styles.progressBar, { width: `${progress}%` }]} />
+            </View>
+          )}
 
-        <TextInput
-          style={styles.Input}
-          placeholder="What's your mind?"
-          multiline
-          numberOfLines={5}
-          value={post}
-          onChangeText={(content) => setPost(content)}
-        ></TextInput>
-        <Button title="Add Post" onPress={addPost} />
-      </View>
-      {/* {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />} */}
-      <ActionButton buttonColor="#57A7FF">
-          <ActionButton.Item buttonColor='#57A7FF' title="Take photo" onPress={() => console.log("notes tapped!")}>
+          <Button title="Add Post" onPress={addPost} />
+        </View>
+        <ActionButton buttonColor="#57A7FF">
+          <ActionButton.Item
+            buttonColor="#57A7FF"
+            title="Take photo"
+            onPress={() => console.log("notes tapped!")}
+          >
             <Icon name="camera" style={styles.actionButtonIcon} />
           </ActionButton.Item>
-          <ActionButton.Item buttonColor='#57A7FF' title="Choose photo" onPress={pickImage}>
+          <ActionButton.Item
+            buttonColor="#57A7FF"
+            title="Choose photo"
+            onPress={pickImage}
+          >
             <Icon name="images-outline" style={styles.actionButtonIcon} />
           </ActionButton.Item>
         </ActionButton>
-    </View>
+      </View>
     </TouchableWithoutFeedback>
   );
 };
@@ -160,7 +170,7 @@ const AddPostScreen = () => {
 export default AddPostScreen;
 
 const styles = StyleSheet.create({
-  container: {
+  Container: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
@@ -168,10 +178,9 @@ const styles = StyleSheet.create({
   actionButtonIcon: {
     fontSize: 20,
     height: 22,
-    color: 'white',
+    color: "white",
   },
-
-  InputWrapper: {
+  inputWrapper: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
@@ -179,7 +188,6 @@ const styles = StyleSheet.create({
     padding: 20,
     width: "100%",
   },
-
   Input: {
     alignItems: "center",
     textAlign: "center",
@@ -189,14 +197,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     opacity: 0.7,
   },
-  bouton: {
-    alignItems: "center",
-    justifyContent: "center",
-    backfaceVisibility: "visible",
-    backgroundColor: "#2e64e5",
-    padding: 10,
-    borderRadius: 3,
-    marginBottom: 10,
+  progressBarContainer: {
+    height: 20,
+    width: "100%",
+    backgroundColor: "#f3f3f3",
+    borderColor: "#000",
+    borderWidth: 2,
+    borderRadius: 5,
+  },
+  progressBar: {
+    height: "100%",
+    width: "0%",
+    backgroundColor: "#57A7FF",
+    borderRadius: 5,
   },
 });
-

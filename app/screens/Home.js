@@ -1,13 +1,7 @@
 import { StyleSheet, View, Text, Image, ScrollView } from "react-native";
 import React, { useState, useEffect } from "react";
 import { FIREBASE_DB } from "../../FirebaseConfig";
-import {
-  collection,
-  setDoc,
-  getDocs,
-  onSnapshot,
-  query,
-} from "firebase/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
 
 const ShowData = () => {
   const db = FIREBASE_DB;
@@ -29,21 +23,19 @@ const ShowData = () => {
     <ScrollView>
       <View style={styles.background}>
         {postData
-          .sort((a, b) => b.timestamp - a.timestamp) // Triez les posts par timestamp décroissant
+          .sort((a, b) => b.timestamp - a.timestamp) // Triez les posts par ordre chronologique inverse
           .map((post) => (
             <View key={post.id} style={styles.headerContainer}>
               <View style={styles.userContainer}>
-                {/* <Image style={styles.image} source={{ uri: post.imageUri }} /> */}
-                <Image  style={styles.imageProfile}/>
-                
+                <Image style={styles.imageProfile} />
                 <Text style={styles.username}>{post.username}</Text>
               </View>
               {post.imageUri && (
-                  <Image
-                    style={styles.imagePost}
-                    source={{ uri: post.imageUri }}
-                  />
-                )}
+                <Image
+                  style={styles.imagePost}
+                  source={{ uri: post.imageUri }}
+                />
+              )}
               <View style={styles.post}>
                 <Text style={styles.postText}>{post.post}</Text>
               </View>
@@ -62,17 +54,9 @@ const styles = StyleSheet.create({
     padding: 10,
     borderBottomWidth: 1,
     borderBottomColor: "black",
-    // borderRadius: 10,
-    // backgroundColor: 'white',
-    // elevation: 3, // Pour l'ombre sur Android
-    // shadowColor: '#000', // Pour l'ombre sur iOS
-    // shadowOffset: { width: 0, height: 2 },
-    // shadowOpacity: 0.2,
-    // shadowRadius: 2,
   },
   userContainer: {
     flexDirection: "row",
-    // justifyContent: 'space-between',
   },
   imageProfile: {
     width: 50,
@@ -82,8 +66,8 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   imagePost: {
-    width: 250,
-    height: 150,
+    width: 300,
+    height: 300,
     borderRadius: 10,
     margin: 10,
     backgroundColor: "#F5F5DC",
