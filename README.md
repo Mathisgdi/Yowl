@@ -57,7 +57,7 @@ Welcome to Yowl project, your application to communicate with your friends and y
     npx expo start
     ```
 
-Press w to open on the web or scan the QR Code in the terminal on your phone.
+Press w to open on the web or scan the QR Code in the terminal on your phone and go on the Expo App.
 To see more details on expo, refer to the README in the ".expo" folder.
 
 - Access the URL `http://localhost:8081` in your browser and adapt it with phone format.
