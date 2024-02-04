@@ -5,13 +5,15 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 // Importe les différents écrans
-import Home from "./app/screens/Home";
-import Search from "./app/screens/Search";
-import Create from "./app/screens/Create";
-import Community from "./app/screens/Community";
-import Profile from "./app/screens/Profile";
-import Login from "./app/screens/Login";
-import Register from "./app/screens/Register";
+import Home from './app/screens/Home';
+import Search from './app/screens/Search';
+import Create from './app/screens/Create';
+// import Community from './app/screens/Community';
+import Profile from './app/screens/Profile';
+import Login from './app/screens/Login';
+import Register from './app/screens/Register';
+import Settings from './app/screens/Settings';
+import Privacy from './app/screens/Privacy';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -53,11 +55,11 @@ function HomeTab() {
         })}
       >
         {/* énumère chaque écran avec ses composant importé en haut de la page */}
-      <Tab.Screen name="Home" component={Home} options = {{tabBarShowLabel : false,  headerShown: false}}  /> 
+      <Tab.Screen name="Home" component={Home} options = {{tabBarShowLabel : false,  headerShown: false}}  />
       <Tab.Screen name="Search" component={Search} options = {{tabBarShowLabel : false,  headerShown: false}} />
       <Tab.Screen name="Create" component={Create} options = {{tabBarShowLabel : false,  headerShown: false}} />
-      <Tab.Screen name="Community" component={Community} options = {{tabBarShowLabel : false,  headerShown: false}} />
-      <Tab.Screen name="Profile" component={Profile} options = {{tabBarShowLabel : false, headerBackTitleVisible : true, headerShown: false }} />
+      {/* <Tab.Screen name="Community" component={Community} options = {{tabBarShowLabel : false,  headerShown: false}} /> */}
+      { <Tab.Screen name="Profile" component={Profile} options = {{tabBarShowLabel : false, headerBackTitleVisible : true, headerShown: false }} /> }
     </Tab.Navigator>
   );
 }
@@ -65,15 +67,17 @@ function HomeTab() {
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator initialRouteName="Login">
         <Stack.Screen
           name="Home"
           component={HomeTab}
-          options={{ title: "Join" }}
+          options={{ title: "Join", headerShown: true, headerLeft: null }}
         />
+        {/* la navbar n'est pas affiché sur la page login */}
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Register" component={Register} />
-        {/* la navbar n'est pas affiché sur la page login */}
+        <Stack.Screen name="Settings" component={Settings} />
+        <Stack.Screen name="Privacy" component={Privacy} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,56 +1,90 @@
-import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity } from 'react-native';
-import React, { useContext } from 'react';
-import { useNavigation } from '@react-navigation/native';
-// import tailwind from 'tailwind-rn';
+import { StyleSheet, View, Text, Image, ScrollView } from "react-native";
+import React, { useState, useEffect } from "react";
+import { FIREBASE_DB } from "../../FirebaseConfig";
+import { collection, onSnapshot } from "firebase/firestore";
 
-// import { create } from 'tailwind-rn';
+const ShowData = () => {
+  const db = FIREBASE_DB;
+  const [postData, setPostData] = useState([]);
+  useEffect(() => {
+    const unsubscribe = onSnapshot(collection(db, "posts"), (querySnapshot) => {
+      const postsData = [];
+      querySnapshot.forEach((doc) => {
+        postsData.push({ id: doc.id, ...doc.data() });
+      });
+      setPostData(postsData);
+    });
+    return () => {
+      unsubscribe(); // Lorsque le composant est démonté, cela arrête la surveillance des modifications
+    };
+  }, [db]);
 
-// const {tailwind, getColor} = create(styles);
+  return (
+    <ScrollView>
+      <View style={styles.background}>
+        {postData
+          .sort((a, b) => b.timestamp - a.timestamp) // Triez les posts par ordre chronologique inverse
+          .map((post) => (
+            <View key={post.id} style={styles.headerContainer}>
+              <View style={styles.userContainer}>
+                <Image style={styles.imageProfile} />
+                <Text style={styles.username}>{post.username}</Text>
+              </View>
+              {post.imageUri && (
+                <Image
+                  style={styles.imagePost}
+                  source={{ uri: post.imageUri }}
+                />
+              )}
+              <View style={styles.post}>
+                <Text style={styles.postText}>{post.post}</Text>
+              </View>
+            </View>
+          ))}
+      </View>
+    </ScrollView>
+  );
+};
 
-function Home (){
-  const navigation = useNavigation()
-    return (
-        <View>
-          <Text>
-            page home de fou furieux
-          </Text>
-      <Button 
-      title='Go to login'
-      onPress={() => navigation.navigate('Login')} 
-      />
-      {/* <TouchableOpacity 
-  style={tailwind('bg-blue-500 p-2 rounded')}
-  onPress={() => navigation.navigate('Login')}
->
-  <Text style={tailwind('text-white text-center')}>Go to login</Text>
-</TouchableOpacity> */}
-        </View>
-    )
-}
+export default ShowData;
 
-export default Home;
-
-// import { create } from 'tailwind-rn';
-// import {useTailwind} from 'tailwind-rn';
-// // import styles from './styles.json';
-// import { useNavigation } from '@react-navigation/native';
-// const {tailwind} = create(styles);
-
-// function Home (){
-//   const navigation = useNavigation()
-//     return (
-//         <View style={tailwind('p-4')}>
-//           <Text style={tailwind('text-xl font-bold')}>
-//             page home de fou furieux
-//           </Text>
-//           <TouchableOpacity 
-//             style={tailwind('bg-blue-500 p-2 rounded')}
-//             onPress={() => navigation.navigate('Login')}
-//           >
-//             <Text style={tailwind('text-white text-center')}>Go to login</Text>
-//           </TouchableOpacity>
-//         </View>
-//     )
-// }
-
-// export default Home;
+const styles = StyleSheet.create({
+  headerContainer: {
+    margin: 20,
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "black",
+  },
+  userContainer: {
+    flexDirection: "row",
+  },
+  imageProfile: {
+    width: 50,
+    height: 50,
+    borderRadius: 50,
+    backgroundColor: "#F5F5DC",
+    margin: 10,
+  },
+  imagePost: {
+    width: 300,
+    height: 300,
+    borderRadius: 10,
+    margin: 10,
+    backgroundColor: "#F5F5DC",
+  },
+  username: {
+    marginTop: 20,
+    fontSize: 20,
+  },
+  post: {
+    alignItems: "center",
+  },
+  postText: {
+    fontSize: 16,
+    opacity: 0.7,
+    padding: 10,
+  },
+  background: {
+    backgroundColor: "#fff",
+  },
+});
